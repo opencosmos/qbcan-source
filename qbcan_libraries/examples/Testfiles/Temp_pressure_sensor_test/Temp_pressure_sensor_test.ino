@@ -1,7 +1,7 @@
 /* 
-    qbcan transceiver test code.
+    qbcan temperature and pressure sensor test code.
 
-    This sketch tests the transceiver
+    This sketch reads temperature and pressure data and prints it via serial
 */
 
 //Include the required libraries
@@ -26,10 +26,12 @@ void setup()
 {
   //Initialize serial connection for debugging
   Serial.begin(9600);
+  delay (10000);
   Serial.println("REBOOT");
 
   // Initialize pressure sensor.
- /* if (bmp.begin())
+  Serial.println ("Check_1");
+  if (bmp.begin())
     Serial.println("BMP180 init success");
   else
   {
@@ -37,21 +39,22 @@ void setup()
     Serial.println("BMP180 init fail (disconnected?)\n\n");
     while(1); // Pause forever.
   }
-*/
+/*
   //Initialize radio
   radio.initialize(FREQUENCY,NODEID,NETWORKID);
   radio.setHighPower(); //To use the high power capabilities of the RFM69HW
   radio.encrypt(ENCRYPTKEY);
   Serial.println("Transmitting at 433 Mhz");
-
+*/
 }
 
 void loop()
 {
-/*  double T,P;
+    Serial.println ("Check_2_Entering_loop");
+  double T,P;
   
-   Get a new pressure reading:
-   bmp.getData(T,P);
+  // Get a new pressure reading:
+  bmp.getData(T,P);
 
   //Display data
   Serial.print("Absolute pressure: ");
@@ -60,12 +63,12 @@ void loop()
   Serial.print("Temperature: ");
   Serial.print(T,2);
   Serial.println(" deg C.");
-*/
+
   //Send Data
-  sprintf(payload,"Hello world");
-  Serial.println(payload);
-  radio.send(GATEWAYID, payload, 50);
-  Serial.println("Send complete");
+//  sprintf(payload,"T: %d C, P: %d mb.",(int)T,(int)P);
+//  Serial.println(payload);
+//  radio.send(GATEWAYID, payload, 50);
+//  Serial.println("Send complete");
   
   delay(500);
 }
